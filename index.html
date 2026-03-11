@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raïssa Burguera — Data Analyst</title>
+  <style>
+    :root {
+      --bg: #f5f2ec;
+      --surface: #ffffff;
+      --dark: #12100e;
+      --accent: #c8562a;
+      --accent2: #2a6c8c;
+      --muted: #8a8278;
+      --border: #ddd8ce;
+      --mono: 'Courier New', Courier, monospace;
+      --serif: Georgia, 'Times New Roman', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: var(--serif);
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245,242,236,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 6rem 8rem 4rem;
+      gap: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-left { }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .hero-tagline {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-reconversion {
+      background: var(--dark);
+      color: var(--bg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--accent);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .hero-reconversion p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-reconversion strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(200,86,42,0.3);
+    }
+
+    .btn-outline {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--dark);
+      border: 1px solid var(--dark);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--dark);
+      color: var(--bg);
+    }
+
+    /* HERO RIGHT — STATS */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .stat-big {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .stat-info {
+      text-align: right;
+    }
+
+    .stat-info span {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: block;
+    }
+
+    .conversion-badge {
+      background: var(--accent);
+      color: white;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.3rem 0.7rem;
+      letter-spacing: 0.1em;
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    /* SECTION LAYOUT */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent2);
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ABOUT */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: #3a3530;
+      margin-bottom: 1.4rem;
+      font-weight: 300;
+    }
+
+    .about-text p strong { font-weight: 700; }
+
+    .about-panel {
+      background: var(--dark);
+      padding: 2.5rem;
+      color: var(--bg);
+    }
+
+    .about-panel h3 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .info-item:last-child { border: none; }
+
+    .info-key {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: rgba(245,242,236,0.4);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .info-val {
+      font-size: 0.9rem;
+      color: var(--bg);
+      font-weight: 300;
+    }
+
+    .hse-badge {
+      background: var(--accent);
+      color: white;
+      padding: 0.6rem 1rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+      display: inline-block;
+    }
+
+    /* SKILLS */
+    #skills .skills-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .skill-block {
+      background: var(--bg);
+      padding: 2.5rem;
+      transition: background 0.3s;
+    }
+
+    .skill-block:hover { background: var(--surface); }
+
+    .skill-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+
+    .skill-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      padding: 0.25rem 0.6rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+
+    .tag.hot {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* PROJECTS */
+    #projects .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .project-item {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 3rem;
+      padding: 3rem;
+      align-items: start;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .project-item:hover { background: var(--surface); }
+
+    .project-num {
+      font-size: 4rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--border);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+
+    .project-item:hover .project-num { color: var(--accent); }
+
+    .project-type {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: #5a5550;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-result {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent);
+      letter-spacing: 0.05em;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .project-meta {
+      text-align: right;
+      min-width: 150px;
+    }
+
+    .project-impact {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent2);
+      line-height: 1;
+    }
+
+    .project-impact-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* CERTIFICATIONS + FORMATION */
+    #certifications {
+      background: var(--dark);
+      color: var(--bg);
+      max-width: 100%;
+      padding: 6rem 8rem;
+    }
+
+    #certifications .section-title { color: var(--bg); }
+    #certifications .section-tag { color: var(--accent); }
+    #certifications .section-header {
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .cert-card {
+      background: var(--dark);
+      padding: 2rem;
+      transition: background 0.3s;
+    }
+
+    .cert-card:hover { background: #1e1c18; }
+
+    .cert-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+
+    .cert-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--bg);
+    }
+
+    .cert-org {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: rgba(245,242,236,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .cert-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-top: 0.4rem;
+    }
+
+    .pega-card {
+      border: 1px solid var(--accent);
+    }
+
+    .pega-card .cert-name { color: #ffd0bc; }
+
+    /* CONTACT */
+    #contact {
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+
+    .contact-big {
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      color: var(--accent);
+    }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-link:hover {
+      background: var(--dark);
+      color: var(--bg);
+      border-color: var(--dark);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; padding: 8rem 3rem 4rem; }
+      .hero-right { flex-direction: row; flex-wrap: wrap; }
+      .hero-stat { flex: 1; min-width: 200px; }
+      section { padding: 4rem 2rem; }
+      #certifications { padding: 4rem 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #about .about-grid { grid-template-columns: 1fr; }
+      #skills .skills-wrapper { grid-template-columns: 1fr; }
+      .project-item { grid-template-columns: 1fr; gap: 1rem; }
+      .project-meta { text-align: left; }
+      .certs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Raïssa Burguera</div>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#certifications">Formations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:100%; padding-top:6rem;">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Data Analyst · Business Analyst</div>
+    <h1 class="hero-name">Raïssa<br><em>Burguera</em></h1>
+    <p class="hero-tagline">Python · SQL · Power BI · Machine Learning · Pega BA</p>
+
+    <div class="hero-reconversion">
+      <p>Anciennement <strong>Ingénieure HSE</strong>, j'ai opéré une reconversion vers la <strong>Data</strong> en développant une expertise analytique solide : des données brutes aux insights stratégiques, en passant par la modélisation et la visualisation.</p>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">Voir mes projets</a>
+      <a href="#contact" class="btn-outline">Me contacter</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stat">
+      <div class="stat-big">9</div>
+      <div class="stat-info">
+        <span>Projets</span>
+        <span>Data réalisés</span>
+      </div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-big">5<span style="font-size:1.5rem">+</span></div>
+      <div class="stat-info">
+        <span>Outils</span>
+        <span>maîtrisés</span>
+      </div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-big">5<span style="font-size:1.2rem">+</span></div>
+      <div class="stat-info">
+        <span>Ans d'exp.</span>
+        <span>Ingénieure HSE</span>
+      </div>
+    </div>
+    <div class="hero-stat" style="background:var(--accent);">
+      <div class="stat-big" style="color:#fff;">HSE</div>
+      <div class="stat-info">
+        <span style="color:rgba(255,255,255,0.6);">Reconversion</span>
+        <span style="color:rgba(255,255,255,0.6);">vers la Data</span>
+        <span class="conversion-badge" style="background:#fff; color:var(--accent); margin-top:0.4rem;">→ Data Analyst</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-tag">// 01 — Profil</p>
+      <h2 class="section-title">Qui <em>suis-je</em> ?</h2>
+    </div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>
+        Ingénieure de formation spécialisée en <strong>Hygiène, Sécurité et Environnement (HSE)</strong>, j'ai décidé de me réorienter vers la <strong>Data Analyse</strong> pour allier ma rigueur d'ingénieure à ma passion pour les données et la résolution de problèmes complexes.
+      </p>
+      <p>
+        Cette reconversion n'est pas une rupture — c'est un atout. Mon expérience HSE m'a appris à <strong>analyser des risques, modéliser des indicateurs de performance et traduire des données terrain en recommandations opérationnelles</strong>. Exactement ce que fait un bon Data Analyst.
+      </p>
+      <p>
+        Aujourd'hui, je maîtrise l'ensemble de la chaîne analytique : de la collecte et du nettoyage de données jusqu'à la modélisation statistique, le Machine Learning et la création de dashboards décisionnels. Ma certification <strong>Business Analyst Pega</strong> renforce ma capacité à faire le pont entre les besoins métier et les solutions data.
+      </p>
+    </div>
+    <div class="about-panel">
+      <h3>// Informations</h3>
+      <div class="info-item">
+        <div class="info-key">Localisation</div>
+        <div class="info-val">Herblay-sur-Seine, Île-de-France</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Formation Data</div>
+        <div class="info-val">CEFIM · Spécialisation Analyse Prédictive</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Formation initiale</div>
+        <div class="info-val">MS Sécurité & Env. — Mines d'Alès</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Certification</div>
+        <div class="info-val">Pega Certified Business Architect V8.7</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Langages</div>
+        <div class="info-val">Python · SQL · Excel VBA</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Outils BI</div>
+        <div class="info-val">Power BI · Tableau · Google Sheets</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Contact</div>
+        <div class="info-val">ngwong.raissa@gmail.com</div>
+      </div>
+      <div class="info-item">
+        <div class="info-key">Disponibilité</div>
+        <div class="info-val">Ouverte aux opportunités</div>
+      </div>
+      <span class="hse-badge">Total · L'Oréal · Disney · Eiffage</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--surface); max-width:100%; padding:6rem 4rem;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-tag">// 02 — Compétences</p>
+        <h2 class="section-title">Outils & <em>Savoir-faire</em></h2>
+      </div>
+    </div>
+    <div class="skills-wrapper reveal">
+      <div class="skill-block">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python & Analyse</div>
+        <p class="skill-desc">Exploration, nettoyage, modélisation statistique et Machine Learning.</p>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">Pandas</span>
+          <span class="tag hot">Scikit-learn</span>
+          <span class="tag">Numpy</span>
+          <span class="tag">Statsmodels</span>
+          <span class="tag">Matplotlib</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL & Bases de données</div>
+        <p class="skill-desc">Requêtage avancé, agrégations, jointures et analyses temporelles.</p>
+        <div class="tag-list">
+          <span class="tag hot">SQL</span>
+          <span class="tag hot">SQLite</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">BigQuery</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Visualisation & BI</div>
+        <p class="skill-desc">Dashboards interactifs et data storytelling pour la prise de décision.</p>
+        <div class="tag-list">
+          <span class="tag hot">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Looker</span>
+          <span class="tag">Seaborn</span>
+          <span class="tag">DAX</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">Machine Learning</div>
+        <p class="skill-desc">Modèles supervisés et non-supervisés, clustering, évaluation de performance.</p>
+        <div class="tag-list">
+          <span class="tag hot">Régression Log.</span>
+          <span class="tag hot">K-Means / CAH</span>
+          <span class="tag hot">ACP</span>
+          <span class="tag">Random Forest</span>
+          <span class="tag">KNN</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Business Analysis · Pega</div>
+        <p class="skill-desc">Modélisation de processus métier, gestion des exigences, certification Pega BA.</p>
+        <div class="tag-list">
+          <span class="tag hot">Pega BA Certifié</span>
+          <span class="tag">BPM</span>
+          <span class="tag">User Stories</span>
+          <span class="tag">Analyse fonctionnelle</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-icon">🛡️</div>
+        <div class="skill-name">Expertise HSE (atout transversal)</div>
+        <p class="skill-desc">Analyse de risques, KPIs de performance, reporting réglementaire — transposables en Data.</p>
+        <div class="tag-list">
+          <span class="tag">Analyse de risques</span>
+          <span class="tag">Indicateurs HSE</span>
+          <span class="tag">Réglementation</span>
+          <span class="tag">Reporting terrain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--surface); max-width:100%; padding:6rem 4rem;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-tag">// 03 — Expérience</p>
+        <h2 class="section-title">Parcours <em>Professionnel</em></h2>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:1px; background:var(--border);">
+
+      <div class="reveal" style="background:var(--bg); display:grid; grid-template-columns:160px 1fr; gap:3rem; padding:2.5rem; align-items:start;">
+        <div style="text-align:right;">
+          <span style="font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.1em; display:block; margin-bottom:0.3rem;">2023 – 2024</span>
+          <span style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Formation</span>
+        </div>
+        <div>
+          <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">Data Analyst — Spécialisation Analyse Prédictive</h3>
+          <p style="font-family:var(--mono); font-size:0.7rem; color:var(--accent2); letter-spacing:0.1em; margin-bottom:0.8rem; text-transform:uppercase;">CEFIM · Centre de Formation</p>
+          <p style="font-size:0.9rem; color:#5a5550; line-height:1.7; font-weight:300;">Python, SQL, Power BI, Statistiques, Machine Learning, Dataviz, Gestion de projet Data. Réalisation de projets professionnalisants en conditions réelles.</p>
+          <div class="tag-list" style="margin-top:0.8rem;">
+            <span class="tag hot">Python</span><span class="tag hot">SQL</span><span class="tag hot">Power BI</span><span class="tag">Machine Learning</span><span class="tag">Dataviz</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="background:var(--bg); display:grid; grid-template-columns:160px 1fr; gap:3rem; padding:2.5rem; align-items:start;">
+        <div style="text-align:right;">
+          <span style="font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.1em; display:block; margin-bottom:0.3rem;">2022 – 2023</span>
+          <span style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Certification</span>
+        </div>
+        <div>
+          <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">Pega Certified Business Architect V8.7</h3>
+          <p style="font-family:var(--mono); font-size:0.7rem; color:var(--accent2); letter-spacing:0.1em; margin-bottom:0.8rem; text-transform:uppercase;">Pega Academy</p>
+          <p style="font-size:0.9rem; color:#5a5550; line-height:1.7; font-weight:300;">Certification officielle Pega BA : recueil et analyse des besoins métier, rédaction des spécifications fonctionnelles, réalisation des tests fonctionnels.</p>
+          <div class="tag-list" style="margin-top:0.8rem;">
+            <span class="tag hot">BPM</span><span class="tag hot">Analyse fonctionnelle</span><span class="tag">User Stories</span><span class="tag">Tests fonctionnels</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="background:var(--bg); display:grid; grid-template-columns:160px 1fr; gap:3rem; padding:2.5rem; align-items:start;">
+        <div style="text-align:right;">
+          <span style="font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.1em; display:block; margin-bottom:0.3rem;">2017 – 2022</span>
+          <span style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">5 ans · HSE</span>
+        </div>
+        <div>
+          <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">Ingénieure Consultante HSE — BTP & Industrie</h3>
+          <p style="font-family:var(--mono); font-size:0.7rem; color:var(--accent2); letter-spacing:0.1em; margin-bottom:0.8rem; text-transform:uppercase;">Total · L'Oréal · Disneyland · Gecina · Eiffage</p>
+          <p style="font-size:0.9rem; color:#5a5550; line-height:1.7; font-weight:300;">Analyse et traitement de données multi-sites, modélisation de tableaux de bord KPI, reportings automatisés, suivi d'indicateurs d'accidents de travail, rédaction d'analyses de causes et recommandations data-driven pour l'optimisation des processus.</p>
+          <div class="tag-list" style="margin-top:0.8rem;">
+            <span class="tag">KPI Reporting</span><span class="tag">Excel Avancé</span><span class="tag">Analyse de risques</span><span class="tag">Audit</span><span class="tag">Data-driven</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-tag">// 04 — Projets</p>
+      <h2 class="section-title">Réalisations <em>Concrètes</em></h2>
+    </div>
+  </div>
+  <div class="projects-list">
+
+    <!-- Projet 1 -->
+    <div class="project-item reveal">
+      <div class="project-num">01</div>
+      <div class="project-content">
+        <p class="project-type">Python · ACP · K-Means · CAH · PESTEL</p>
+        <h3 class="project-name">Étude de marché internationale avec Python</h3>
+        <p class="project-desc">
+          Mission d'analyse stratégique pour identifier les marchés à fort potentiel parmi 100+ pays. Modélisation via 8 variables PESTEL (PIB, inflation, dépendance à l'import, consommation de volaille…). Application d'une ACP pour réduire les dimensions, puis clustering CAH + K-Means pour segmenter les pays. Résultat : Top 3 cibles stratégiques présentées au COMEX — EAU, Koweït, Qatar en opportunité immédiate ; Angola, Ghana, Zambie à moyen terme.
+        </p>
+        <span class="project-result">✓ 3 clusters · 100+ pays · Recommandations COMEX</span>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">ACP</span>
+          <span class="tag hot">K-Means</span>
+          <span class="tag hot">CAH</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">FAO / Banque Mondiale</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">100+</div>
+        <div class="project-impact-label">Pays analysés</div>
+      </div>
+    </div>
+
+    <!-- Projet 2 -->
+    <div class="project-item reveal">
+      <div class="project-num">02</div>
+      <div class="project-content">
+        <p class="project-type">Machine Learning · Classification · Python</p>
+        <h3 class="project-name">Détection de faux billets par Machine Learning</h3>
+        <p class="project-desc">
+          Conception d'un algorithme de détection automatique de contrefaçon à partir des seules mesures géométriques de billets (1 500 billets analysés). Comparaison de 4 modèles : Régression Logistique, KNN, Random Forest et K-Means. Tous atteignent 99% d'accuracy. Modèle retenu : Régression Logistique (AUC = 0.999) pour sa simplicité et son interprétabilité. Livrable final : fonction de prédiction prête à la production avec verdict + probabilité.
+        </p>
+        <span class="project-result">✓ 99% accuracy · AUC 0.999 · Prêt pour production</span>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">Scikit-learn</span>
+          <span class="tag hot">Rég. Logistique</span>
+          <span class="tag">Random Forest</span>
+          <span class="tag">KNN</span>
+          <span class="tag">K-Means</span>
+          <span class="tag">ROC-AUC</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">99%</div>
+        <div class="project-impact-label">Accuracy</div>
+      </div>
+    </div>
+
+    <!-- Projet 3 -->
+    <div class="project-item reveal">
+      <div class="project-num">03</div>
+      <div class="project-content">
+        <p class="project-type">SQL · Analyse Social Media · Business Intelligence</p>
+        <h3 class="project-name">Optimisation de la stratégie Social Media — DATAZINE</h3>
+        <p class="project-desc">
+          Analyse complète des données Facebook Insights du magazine DATAZINE via SQL. Exploration de 13 requêtes couvrant les statistiques générales (4,6M d'utilisateurs engagés, portée moyenne de 161 885), les top pays et villes par nombre de fans, la répartition démographique (56% femmes, tranche 25-34 dominante) et les meilleures créneaux de publication (mercredi · 12h).
+        </p>
+        <span class="project-result">✓ 4,6M utilisateurs · Mercredi 12h = pic d'engagement</span>
+        <div class="tag-list">
+          <span class="tag hot">SQL</span>
+          <span class="tag hot">SQLite</span>
+          <span class="tag hot">Facebook Insights</span>
+          <span class="tag">Agrégations</span>
+          <span class="tag">Jointures</span>
+          <span class="tag">Analyse temporelle</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">4.6M</div>
+        <div class="project-impact-label">Utilisateurs analysés</div>
+      </div>
+    </div>
+
+    <!-- Projet 4 -->
+    <div class="project-item reveal">
+      <div class="project-num">04</div>
+      <div class="project-content">
+        <p class="project-type">Python · Power BI · Analyse de marché</p>
+        <h3 class="project-name">Analyse de marché & Tendances — Secteur Gaming</h3>
+        <p class="project-desc">
+          Mission pour une start-up créatrice de contenus innovants dans l'univers jeux vidéo. Travail en méthode Agile. Collecte et nettoyage de datasets, définition du périmètre et des objectifs métier, création de dashboards Power BI pour visualiser les tendances du marché et les KPI, formulation de recommandations stratégiques basées sur les données pour orienter la roadmap produit.
+        </p>
+        <span class="project-result">✓ Dashboard Power BI · Recommandations stratégiques</span>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">Power BI</span>
+          <span class="tag hot">Agile</span>
+          <span class="tag">Collecte de données</span>
+          <span class="tag">KPI</span>
+          <span class="tag">Dataviz</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">🎮</div>
+        <div class="project-impact-label">Gaming Market</div>
+      </div>
+    </div>
+
+    <!-- Projet 5 -->
+    <div class="project-item reveal">
+      <div class="project-num">05</div>
+      <div class="project-content">
+        <p class="project-type">Python · Jupyter · Automatisation RH</p>
+        <h3 class="project-name">Automatisation & Analyse de données RH</h3>
+        <p class="project-desc">
+          Conception d'une solution Python complète pour la gestion du personnel : saisie et enregistrement automatisés des données dans Jupyter/Colab, nettoyage et traitement des données, création d'indicateurs de performance (KPI) et de visualisations pour le pilotage stratégique RH et l'analyse approfondie des besoins client.
+        </p>
+        <span class="project-result">✓ Solution Python prête à l'emploi · KPI RH automatisés</span>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">Jupyter</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Matplotlib</span>
+          <span class="tag">KPI RH</span>
+          <span class="tag">Automatisation</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">🤖</div>
+        <div class="project-impact-label">Automatisation</div>
+      </div>
+    </div>
+
+    <!-- Projet 6 -->
+    <div class="project-item reveal">
+      <div class="project-num">06</div>
+      <div class="project-content">
+        <p class="project-type">Tableau · Dashboard · Data Visualisation</p>
+        <h3 class="project-name">Dashboard multi-vues — Dental Pharma</h3>
+        <p class="project-desc">
+          Conception d'un dashboard Tableau pour une entreprise pharmaceutique internationale spécialisée dans les soins dentaires. Objectif : surveiller en temps réel les projets en cours et alerter automatiquement sur les écarts critiques (≥ 15%) entre prévisions et réalisations. Trois niveaux de vue créés — Directeur Général, Directeur Régional, Directeur Pays — avec paramètres dynamiques, champs calculés et alertes KPI. Dashboard publié sur Tableau Public.
+        </p>
+        <span class="project-result">✓ Alertes KPI ≥ 15% · 3 vues décisionnelles · Publié sur Tableau Public</span>
+        <div class="tag-list">
+          <span class="tag hot">Tableau</span>
+          <span class="tag hot">Dashboard</span>
+          <span class="tag hot">KPI Alertes</span>
+          <span class="tag">Champs calculés</span>
+          <span class="tag">Paramètres dynamiques</span>
+          <span class="tag">Dataviz</span>
+          <span class="tag">Pharma</span>
+        </div>
+        <a href="https://public.tableau.com/app/profile/raissa.burguera/viz/Dashboard_17506846032930/Histoire1?publish=yes" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; margin-top:1rem; font-family:var(--mono); font-size:0.68rem; color:var(--accent2); letter-spacing:0.08em; text-decoration:none; border-bottom:1px solid var(--accent2); padding-bottom:2px;">
+          🔗 Voir le dashboard en ligne →
+        </a>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">3</div>
+        <div class="project-impact-label">Vues décisionnelles</div>
+      </div>
+    </div>
+
+    <!-- Projet 7 -->
+    <div class="project-item reveal">
+      <div class="project-num">07</div>
+      <div class="project-content">
+        <p class="project-type">Python · Pandas · Nettoyage & Consolidation de données</p>
+        <h3 class="project-name">Nettoyage de données & Calcul du CA — BottleNeck</h3>
+        <p class="project-desc">
+          Mission pour BottleNeck, marchand de vin prestigieux dont l'ERP et le site web n'étaient pas connectés. Audit et nettoyage de 3 sources de données (ERP, Web, table de liaison) : traitement des valeurs manquantes, correction des anomalies (prix négatifs, incohérences stock), suppression des doublons, vérification des clés primaires. Fusion des 3 dataframes via jointures externes, calcul du chiffre d'affaires par produit et total. Détection des valeurs aberrantes sur les prix via méthode IQR et Z-score — 4,48% des prix identifiés comme atypiques (vins onéreux).
+        </p>
+        <span class="project-result">✓ 3 sources consolidées · CA calculé · 4,48% valeurs aberrantes identifiées</span>
+        <div class="tag-list">
+          <span class="tag hot">Python</span>
+          <span class="tag hot">Pandas</span>
+          <span class="tag hot">Nettoyage données</span>
+          <span class="tag">Jointures</span>
+          <span class="tag">IQR / Z-score</span>
+          <span class="tag">ERP</span>
+          <span class="tag">E-commerce</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">3</div>
+        <div class="project-impact-label">Sources fusionnées</div>
+      </div>
+    </div>
+
+    <!-- Projet 8 -->
+    <div class="project-item reveal">
+      <div class="project-num">08</div>
+      <div class="project-content">
+        <p class="project-type">Analyse de marché · Étude concurrentielle · Recommandations</p>
+        <h3 class="project-name">Étude hôtelière — Hôtel 3 étoiles à Tours</h3>
+        <p class="project-desc">
+          Analyse complète pour un hôtel indépendant 3 étoiles à Tours (30 chambres, 1km de la gare). Étude de la clientèle : 40% française, 60% étrangère. Analyse de la concurrence directe (hôtels) et indirecte (gîtes, Airbnb). Exploitation des données touristiques régionales (INSEE, Observatoire Centre-Val-de-Loire). Formulation de recommandations stratégiques : amélioration des services, événements thématiques, bien-être, marketing digital (Instagram, fidélisation), rénovation et étude de rentabilité.
+        </p>
+        <span class="project-result">✓ Analyse concurrentielle · Recommandations budgétaires · Sources open data</span>
+        <div class="tag-list">
+          <span class="tag hot">Analyse de marché</span>
+          <span class="tag hot">Open Data</span>
+          <span class="tag hot">Dataviz</span>
+          <span class="tag">INSEE</span>
+          <span class="tag">TripAdvisor</span>
+          <span class="tag">Recommandations</span>
+          <span class="tag">Tourisme</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">60%</div>
+        <div class="project-impact-label">Clientèle étrangère</div>
+      </div>
+    </div>
+
+    <!-- Projet 9 -->
+    <div class="project-item reveal">
+      <div class="project-num">09</div>
+      <div class="project-content">
+        <p class="project-type">Dataviz · Analyse statistique · Open Data</p>
+        <h3 class="project-name">Réelle insécurité ou sentiment d'insécurité en France ?</h3>
+        <p class="project-desc">
+          Étude data journalistique menée en équipe pour le Journal Indépendant. Analyse des données nationales de criminalité 2016–2022 : distinction entre infractions en hausse (atteintes physiques, violences sexuelles +62%) et en baisse (cambriolages, vols de véhicules -8%). Focus régional sur la Bretagne et Provence-Alpes-Côte d'Azur. Cartographie du ratio policiers/gendarmes par habitants. Conclusion : augmentation des violences physiques mais baisse des atteintes aux biens — décalage entre réalité statistique et sentiment d'insécurité.
+        </p>
+        <span class="project-result">✓ +62% violences physiques · -8% atteintes aux biens · Cartographie nationale</span>
+        <div class="tag-list">
+          <span class="tag hot">Dataviz</span>
+          <span class="tag hot">Open Data</span>
+          <span class="tag hot">Analyse statistique</span>
+          <span class="tag">Cartographie</span>
+          <span class="tag">Data Journalisme</span>
+          <span class="tag">Travail en équipe</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="project-impact">+62%</div>
+        <div class="project-impact-label">Violences physiques</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-tag">// 07 — Formations & Certifications</p>
+        <h2 class="section-title" style="color:var(--bg);">Parcours & <em style="color:#ffd0bc;">Diplômes</em></h2>
+      </div>
+    </div>
+    <div class="certs-grid reveal">
+      <div class="cert-card pega-card">
+        <div class="cert-icon">⚙️</div>
+        <p class="cert-name">Pega Certified Business Architect V8.7</p>
+        <p class="cert-org">Pega Academy</p>
+        <p class="cert-year">2022 – 2023</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📊</div>
+        <p class="cert-name">Data Analyste — Spécialisation Analyse Prédictive</p>
+        <p class="cert-org">CEFIM · Centre de Formation</p>
+        <p class="cert-year">2023 – 2024</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <p class="cert-name">MS Sécurité et Environnement</p>
+        <p class="cert-org">École des Mines d'Alès</p>
+        <p class="cert-year">2015 – 2016</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <p class="cert-name">Master Génie des Procédés</p>
+        <p class="cert-org">Université Paris 13</p>
+        <p class="cert-year">2013 – 2014</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔐</div>
+        <p class="cert-name">Attestation RGPD et ses notions clés</p>
+        <p class="cert-org">CNIL</p>
+        <p class="cert-year">Module 1 validé</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📚</div>
+        <p class="cert-name">Data Analyst — Formation complémentaire</p>
+        <p class="cert-org">OpenClassrooms</p>
+        <p class="cert-year">Juin 2025 – En cours</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="contact-big">Travaillons<br>ensemble.</p>
+    <p class="contact-sub">Ouverte aux opportunités en CDD, CDI ou freelance. Data Analyst avec double culture HSE & Business Analysis.</p>
+    <div class="contact-links">
+      <a href="mailto:ngwong.raissa@gmail.com" class="contact-link">✉️ ngwong.raissa@gmail.com</a>
+      <a href="https://www.linkedin.com/in/raissa-burguera/" target="_blank" class="contact-link">💼 LinkedIn</a>
+      <a href="tel:0673248334" class="contact-link">📞 06 73 24 83 34</a>
+      <a href="#" class="contact-link">📄 Télécharger CV</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 · Raïssa Burguera · Data Analyst · De l'HSE à la Data — une reconversion, une force.</p>
+</footer>
+
+</html>
