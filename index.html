@@ -773,7 +773,7 @@
       </div>
       <div class="info-item">
         <div class="info-key">Disponibilité</div>
-        <div class="info-val">Alternance · CDD · CDI</div>
+        <div class="info-val">Alternance</div>
       </div>
       <span class="hse-badge">Total · L'Oréal · Disney · Eiffage</span>
     </div>
@@ -821,8 +821,7 @@
         <p class="skill-desc">Dashboards interactifs et data storytelling pour la prise de décision.</p>
         <div class="tag-list">
           <span class="tag hot">Power BI</span>
-          <span class="tag">Tableau</span>
-          <span class="tag">Looker</span>
+          <span class="tag hot">Tableau</span>
           <span class="tag">Seaborn</span>
           <span class="tag">DAX</span>
         </div>
@@ -855,10 +854,10 @@
         <div class="skill-name">Expertise HSE (atout transversal)</div>
         <p class="skill-desc">Analyse de risques, KPIs de performance, reporting réglementaire — transposables en Data.</p>
         <div class="tag-list">
-          <span class="tag">Analyse de risques</span>
-          <span class="tag">Indicateurs HSE</span>
-          <span class="tag">Réglementation</span>
-          <span class="tag">Reporting terrain</span>
+          <span class="tag hot">Analyse de risques</span>
+          <span class="tag hot">Indicateurs HSE</span>
+          <span class="tag hot">Réglementation</span>
+          <span class="tag hot">Reporting terrain</span>
         </div>
       </div>
     </div>
@@ -890,12 +889,18 @@
           </div>
         </div>
       </div>
+
+      <div class="reveal" style="background:var(--bg); display:grid; grid-template-columns:160px 1fr; gap:3rem; padding:2.5rem; align-items:start;">
+        <div style="text-align:right;">
+          <span style="font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.1em; display:block; margin-bottom:0.3rem;">Nov. 2023 – Fév. 2024</span>
+          <span style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Formation</span>
+        </div>
         <div>
           <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">Data Analyst — Spécialisation Analyse Prédictive</h3>
           <p style="font-family:var(--mono); font-size:0.7rem; color:var(--accent2); letter-spacing:0.1em; margin-bottom:0.8rem; text-transform:uppercase;">CEFIM · Centre de Formation</p>
           <p style="font-size:0.9rem; color:#5a5550; line-height:1.7; font-weight:300;">Python, SQL, Power BI, Statistiques, Machine Learning, Dataviz, Gestion de projet Data. Réalisation de projets professionnalisants en conditions réelles.</p>
           <div class="tag-list" style="margin-top:0.8rem;">
-            <span class="tag hot">Python</span><span class="tag hot">SQL</span><span class="tag hot">Power BI</span><span class="tag">Machine Learning</span><span class="tag">Dataviz</span>
+            <span class="tag hot">Python</span><span class="tag hot">SQL</span><span class="tag hot">Power BI</span><span class="tag hot">Machine Learning</span><span class="tag hot">Dataviz</span>
           </div>
         </div>
       </div>
@@ -925,7 +930,7 @@
           <p style="font-family:var(--mono); font-size:0.7rem; color:var(--accent2); letter-spacing:0.1em; margin-bottom:0.8rem; text-transform:uppercase;">Total · L'Oréal · Disneyland · Gecina · Eiffage</p>
           <p style="font-size:0.9rem; color:#5a5550; line-height:1.7; font-weight:300;">Analyse et traitement de données multi-sites, modélisation de tableaux de bord KPI, reportings automatisés, suivi d'indicateurs d'accidents de travail, rédaction d'analyses de causes et recommandations data-driven pour l'optimisation des processus.</p>
           <div class="tag-list" style="margin-top:0.8rem;">
-            <span class="tag">KPI Reporting</span><span class="tag">Excel Avancé</span><span class="tag">Analyse de risques</span><span class="tag">Audit</span><span class="tag">Data-driven</span>
+            <span class="tag hot">KPI Reporting</span><span class="tag hot">Excel Avancé</span><span class="tag hot">Analyse de risques</span><span class="tag hot">Audit</span><span class="tag hot">Data-driven</span>
           </div>
         </div>
       </div>
@@ -951,18 +956,25 @@
         <p class="project-type">Machine Learning · Classification · Python · Mars 2026</p>
         <h3 class="project-name">Détection de faux billets par Machine Learning</h3>
         <p class="project-desc">
-          Conception d'un algorithme de détection automatique de contrefaçon à partir des seules mesures géométriques de billets (1 500 billets analysés). Comparaison de 4 modèles : Régression Logistique, KNN, Random Forest et K-Means. Modèle retenu : Régression Logistique (AUC = 0.999) pour sa simplicité et son interprétabilité. Livrable final : fonction de prédiction prête à la production avec verdict + probabilité.
+          <strong>Contexte :</strong> Mission pour l'Organisation nationale de lutte contre le faux-monnayage (ONCFM), dont l'objectif est d'identifier automatiquement les billets contrefaits à partir de leurs seules dimensions géométriques (length, height_left, height_right, margin_up, margin_low, diagonal). Dataset de 1 500 billets : 1 000 authentiques (66,7%) et 500 contrefaits (33,3%).<br/><br/>
+          <strong>Analyse exploratoire :</strong> Les faux billets présentent une longueur (length) inférieure de +1,57 mm et une marge basse (margin_low) supérieure de +1,10 mm par rapport aux vrais billets. Ces deux variables sont les plus discriminantes, confirmées par la heatmap de corrélation (length ↔ is_genuine : +0,85 ; margin_low ↔ is_genuine : -0,78). 37 valeurs manquantes sur margin_low (2,47%) imputées par la médiane pour préserver la distribution.<br/><br/>
+          <strong>Modélisation :</strong> Découpage 80/20 (1 200 billets d'entraînement / 300 de test). Comparaison de 4 modèles supervisés et non-supervisé : Régression Logistique, KNN (n=10), Random Forest (100 arbres) et K-Means clustering. Évaluation par accuracy, précision, recall, F1-score et AUC-ROC.<br/><br/>
+          <strong>Résultats :</strong> Tous les modèles atteignent 99% d'accuracy. La Régression Logistique est retenue (AUC = 0,999) pour sa simplicité, son interprétabilité et sa facilité de mise en production. Livrable final : fonction de prédiction prête à l'emploi — entrée CSV → verdict VRAI/FAUX + probabilité (ex : A_1 FAUX 0,09% · A_4 VRAI 97,94%).
         </p>
-        <span class="project-result">✓ 99% accuracy · AUC 0.999 · Prêt pour production</span>
+        <span class="project-result">✓ 4 modèles comparés · 99% accuracy · AUC 0.999 · Fonction de prédiction livrée</span>
         <div class="tag-list">
           <span class="tag hot">Python</span>
           <span class="tag hot">Scikit-learn</span>
           <span class="tag hot">Rég. Logistique</span>
-          <span class="tag">Random Forest</span>
-          <span class="tag">KNN</span>
-          <span class="tag">K-Means</span>
-          <span class="tag">ROC-AUC</span>
+          <span class="tag hot">Random Forest</span>
+          <span class="tag hot">KNN</span>
+          <span class="tag hot">K-Means</span>
+          <span class="tag hot">ROC-AUC</span>
+          <span class="tag hot">Matrice de confusion</span>
         </div>
+        <a href="CR_Detection_faux_billets_V_FINAL.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; margin-top:1rem; font-family:var(--mono); font-size:0.68rem; color:var(--accent2); letter-spacing:0.08em; text-decoration:none; border-bottom:1px solid var(--accent2); padding-bottom:2px;">
+          📄 Voir le compte-rendu complet →
+        </a>
       </div>
       <div class="project-meta">
         <div class="project-impact">99%</div>
@@ -1200,7 +1212,7 @@
         <div class="cert-icon">📊</div>
         <p class="cert-name">Data Analyste — Spécialisation Analyse Prédictive</p>
         <p class="cert-org">CEFIM · Centre de Formation</p>
-        <p class="cert-year">2023 – 2024</p>
+        <p class="cert-year">Nov. 2023 – Fév. 2024</p>
       </div>
       <div class="cert-card">
         <div class="cert-icon">🛡️</div>
@@ -1234,7 +1246,7 @@
 <section id="contact">
   <div class="reveal">
     <p class="contact-big">Travaillons<br>ensemble.</p>
-    <p class="contact-sub">Ouverte aux opportunités en Alternance, CDD, CDI. Data Analyst avec double culture HSE & Business Analysis.</p>
+    <p class="contact-sub">Disponible en alternance - Septembre 2026. Data Analyst avec double culture HSE & Business Analysis.</p>
     <div class="contact-links">
       <a href="mailto:ngwong.raissa@gmail.com" class="contact-link">✉️ ngwong.raissa@gmail.com</a>
       <a href="https://www.linkedin.com/in/raissa-burguera/" target="_blank" class="contact-link">💼 LinkedIn</a>
